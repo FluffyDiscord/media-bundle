@@ -11,6 +11,8 @@ use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Symfony\Component\DependencyInjection\Definition;
+use Doctrine\ORM\Mapping\Driver\AttributeDriver;
 
 
 class RankyMediaBundle extends Bundle
@@ -21,12 +23,11 @@ class RankyMediaBundle extends Bundle
         parent::build($container);
         $container->addCompilerPass(new MediaCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 1);
         if (\class_exists('Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass')) {
-            $container->addCompilerPass(
-                DoctrineOrmMappingsPass::createAttributeMappingDriver(
-                    namespaces: ['Ranky\MediaBundle\Domain'],
-                    directories: [\dirname(__DIR__).'/src/Domain'],
-                )
-            );
+            $driver = new Definition(AttributeDriver::class, [[\dirname(__DIR__).'/src/Domain']]);
+
+            $compilerPass = new DoctrineOrmMappingsPass($driver, ['Ranky\MediaBundle\Domain'], []);
+
+            $container->addCompilerPass($compilerPass);
         }
     }
 

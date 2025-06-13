@@ -6,6 +6,7 @@
 - quick and dirty Stimulus support
 - or any other SPA or similar navigators/routes to Turbo
 - filesystem now creates directories with 0777 instead of 0755
+- Uppy now includes every language it supports, still lazily loaded
 
 --------------------
 

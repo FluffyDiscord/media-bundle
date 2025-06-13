@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 return [
+    'url'                          => 'URL',
     'title'                        => 'Gestión de imágenes y archivos',
     'open_upload_dashboard'        => 'Abrir el panel de subida de medios',
     'on_remove'                    => 'Archivo eliminado correctamente',

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 return [
+    'url'                          => 'URL',
     'title'                        => 'Image and file management',
     'open_upload_dashboard'        => 'Open the media upload panel',
     'on_remove'                    => 'File deleted successfully',

@@ -1,5 +1,6 @@
 export type TranslationsType = {
   breakpoints: string;
+  url: string;
   open_upload_dashboard: string;
   by: string;
   file: string;

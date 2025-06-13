@@ -74,7 +74,7 @@ const ModalFileContent = ({ onDelete }: ModalFileContentType): React.ReactElemen
           disabled={disableSubmit}
           onClick={(event) => onDelete(event, setDisableSubmit)}
         >
-          🗑️ <Trans message="delete" />
+          <Trans message="delete" />
         </button>
       </div>
       <div className="ranky-media-modal-file__dialog__content__show__info">
@@ -85,7 +85,7 @@ const ModalFileContent = ({ onDelete }: ModalFileContentType): React.ReactElemen
               <td>{currentMedia.file.name}</td>
             </tr>
             <tr>
-              <th scope="row">URL</th>
+              <th scope="row"><Trans message="url" /></th>
               <td>
                 <a target="_blank" href={currentMedia.file.url} rel="noreferrer">
                   {currentMedia.file.url}

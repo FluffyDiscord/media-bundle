@@ -7,6 +7,7 @@
 - or any other SPA or similar navigators/routes to Turbo
 - filesystem now creates directories with 0777 instead of 0755
 - Uppy now includes every language it supports, still lazily loaded
+- fixed some deprecations that I found
 
 --------------------
 

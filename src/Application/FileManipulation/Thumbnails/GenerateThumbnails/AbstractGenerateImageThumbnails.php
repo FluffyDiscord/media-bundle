@@ -94,7 +94,8 @@ abstract class AbstractGenerateImageThumbnails
             }
 
             $outputPath = $this->filePathResolver->resolveFromBreakpoint($nameBreakpoint, $file->path());
-            $this->fileRepository->makeDirectory($outputPath);
+            $directory = \pathinfo($outputPath, PATHINFO_DIRNAME);
+            $this->fileRepository->makeDirectory($directory);
 
             if (!$this->fileResizeHandler->resize(
                 $file,

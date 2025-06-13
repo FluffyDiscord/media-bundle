@@ -130,7 +130,7 @@ const ModalFileContent = ({ onDelete }: ModalFileContentType): React.ReactElemen
                         <li key={thumbnail.name + thumbnail.breakpoint}>
                           <a target="_blank" rel="noopener noreferrer" href={thumbnail.url}>
                             <b>{thumbnail.breakpoint}:</b> {thumbnail.dimension.label}&nbsp;
-                            <b>size:</b> {thumbnail.humanSize}
+                            <b><Trans message="size"/>:</b> {thumbnail.humanSize}
                           </a>
                         </li>
                       );

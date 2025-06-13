@@ -9,6 +9,7 @@ import ApiProblemError from '@rankyMedia/api/model/ApiProblemError';
 import { PageLayoutProps } from '@rankyMedia/types/PageLayout';
 import { useSetAtom } from 'jotai';
 import useMediaRepository from '@rankyMedia/api/hook/useMediaRepository';
+import Trans from '@rankyMedia/components/Common/Trans';
 
 const PageListLayout: React.FC<PageLayoutProps> = ({ pages, openModalFile }): React.ReactElement => {
   const [selectAll, setSelectAll] = useState<boolean>(false);
@@ -146,7 +147,7 @@ const PageListLayout: React.FC<PageLayoutProps> = ({ pages, openModalFile }): Re
                               <li key={thumbnail.name + thumbnail.breakpoint}>
                                 <a target="_blank" rel="noopener noreferrer" href={thumbnail.url}>
                                   <b>{thumbnail.breakpoint}:</b> {thumbnail.dimension.label}&nbsp;
-                                  <b>size:</b> {thumbnail.humanSize}
+                                  <b><Trans message="size"/>:</b> {thumbnail.humanSize}
                                 </a>
                               </li>
                             );

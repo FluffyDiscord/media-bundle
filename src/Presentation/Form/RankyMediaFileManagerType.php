@@ -83,11 +83,8 @@ class RankyMediaFileManagerType extends AbstractType
             'association'        => $options['association'],
             'preview_justification' => $options['preview_justification'],
             'button_justification' => $options['button_justification'],
+            'stimulus' => $options['stimulus'] === true ? 'ranky' : $options['stimulus'],
         ]);
-
-        if($view->vars['stimulus'] === true) {
-            $view->vars['stimulus'] = 'ranky';
-        }
     }
 
 

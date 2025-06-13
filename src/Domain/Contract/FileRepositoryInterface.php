@@ -17,7 +17,7 @@ interface FileRepositoryInterface
 
     public function filesizeFromPath(string $path): int;
 
-    public function dimensionsFromPath(string $path, string $mime = null): Dimension;
+    public function dimensionsFromPath(string $path, ?string $mime = null): Dimension;
 
     public function makeDirectory(string $path): void;
 

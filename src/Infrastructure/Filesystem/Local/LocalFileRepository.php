@@ -98,7 +98,7 @@ class LocalFileRepository implements FileRepositoryInterface
         return 0;
     }
 
-    public function dimensionsFromPath(string $path, string $mime = null): Dimension
+    public function dimensionsFromPath(string $path, ?string $mime = null): Dimension
     {
         $mime ??= \mime_content_type($path);
 

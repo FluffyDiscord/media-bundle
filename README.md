@@ -1,5 +1,14 @@
 # MediaBundle (Media File Manager for Symfony)
 
+-----------------
+
+# Differences from the original bundle
+- quick and dirty Stimulus support
+- or any other SPA or similar navigators/routes to Turbo
+- filesystem now creates directories with 0777 instead of 0755
+
+--------------------
+
 [![CI](https://github.com/ranky/media-bundle/actions/workflows/ci.yaml/badge.svg)](https://github.com/ranky/media-bundle/actions/workflows/ci.yaml)
 
 MediaBundle is a media file manager bundle for Symfony with a REST API and an admin interface (React). It provides a clean and user-friendly way to upload, edit and delete files. It supports multiple formats. You can upload images, videos, audios, documents, zip files, etc.

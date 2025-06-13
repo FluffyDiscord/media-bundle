@@ -76,7 +76,8 @@ class LocalFileRepository implements FileRepositoryInterface
         $this->makeDirectory(\pathinfo($newPathFileName, PATHINFO_DIRNAME));
 
         try {
-            $this->filesystem->rename($oldPathFileName, $newPathFileName, true);
+            $this->filesystem->copy($oldPathFileName, $newPathFileName, true);
+            $this->filesystem->remove($oldPathFileName);
         } catch (IOException $IOException) {
             throw new RenameFileException(
                 sprintf('Could not move (rename) the file "%s" to "%s".', $oldPathFileName, $newPathFileName),

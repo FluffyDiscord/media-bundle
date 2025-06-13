@@ -57,7 +57,7 @@ abstract class BaseMediaApiController implements ServiceSubscriberInterface
         string $id,
         array $parameters = [],
         string $domain = MediaBundleExtension::CONFIG_DOMAIN_NAME,
-        string $locale = null
+        ?string $locale = null
     ): string {
         return $this->container->get('translator')->trans($id, $parameters, $domain, $locale);
     }

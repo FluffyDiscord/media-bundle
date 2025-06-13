@@ -56,7 +56,7 @@ class RankyMediaFileManagerType extends AbstractType
             'multiple_selection' => false,
             'preview_justification' => 'center',
             'button_justification' => 'center',
-            'modal_title'        => 'Media File Manager',
+            'modal_title'        => 'title',
             'association'        => false,
             'api_prefix'         => null,
             'save_path'          => false,

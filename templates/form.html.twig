@@ -17,7 +17,7 @@
                  id="ranky-media-form-type__content-{{- form.vars.id -}}"
                  data-api-prefix="{{- form.vars.api_prefix ?? ranky_media_api_prefix ?? '' -}}"
                  data-field-id="{{- form.vars.id -}}"
-                 data-title="{{- form.vars.modal_title -}}"
+                 data-title="{{- form.vars.modal_title|trans({}, 'ranky_media') -}}"
                  data-multiple-selection="{{- form.vars.multiple_selection -}}"
                  data-preview-justification="{{- form.vars.preview_justification -}}"
                  data-button-justification="{{- form.vars.button_justification -}}"

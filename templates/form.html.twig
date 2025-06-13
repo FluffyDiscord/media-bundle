@@ -21,6 +21,7 @@
                  data-multiple-selection="{{- form.vars.multiple_selection -}}"
                  data-preview-justification="{{- form.vars.preview_justification -}}"
                  data-button-justification="{{- form.vars.button_justification -}}"
+                 {% if form.vars.stimulus != false %}data-controller="{{ form.vars.stimulus }}"{% endif %}
             >
             </div>
 

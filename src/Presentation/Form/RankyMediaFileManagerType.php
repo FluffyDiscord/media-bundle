@@ -60,6 +60,7 @@ class RankyMediaFileManagerType extends AbstractType
             'association'        => false,
             'api_prefix'         => null,
             'save_path'          => false,
+            'stimulus'          => class_exists('Symfony\UX\StimulusBundle\StimulusBundle'), // either true to use 'ranky' controller, or your own name
         ]);
 
 
@@ -70,6 +71,7 @@ class RankyMediaFileManagerType extends AbstractType
         $resolver->setAllowedTypes('api_prefix', ['string', 'null']);
         $resolver->setAllowedTypes('preview_justification', 'string');
         $resolver->setAllowedTypes('button_justification', 'string');
+        $resolver->setAllowedTypes('stimulus', ['bool', 'bool']);
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options): void
@@ -82,6 +84,10 @@ class RankyMediaFileManagerType extends AbstractType
             'preview_justification' => $options['preview_justification'],
             'button_justification' => $options['button_justification'],
         ]);
+
+        if($view->vars['stimulus'] === true) {
+            $view->vars['stimulus'] = 'ranky';
+        }
     }
 
 

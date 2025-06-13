@@ -17,6 +17,17 @@ declare global {
     uppy: Uppy;
     Uppy: { locales: object }
     LOCALE: string;
+    RankyMediaBundle: {
+      unbindComponents: () => void;
+      bindComponents: () => void;
+      initMediaManager: (container: HTMLElement) => import('react-dom/client').Root;
+      renderMediaManagerModal: (event: Event) => void;
+      mediaFormPreviewObserver: {
+        observe: () => void,
+        disconnect: () => void,
+      };
+      renderMediaFormPreview: (formSelect: HTMLDivElement) => import('react-dom/client').Root;
+    }
   }
 
   type ApiProblem = {

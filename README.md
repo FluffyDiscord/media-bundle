@@ -313,6 +313,108 @@ php bin/console doctrine:schema:update --force
 php bin/console assets:install
 ```
 
+#### Step 6: Load Javascript (js) and Style (css) entries from `/public/bundles/rankymedia/entrypoints.json`
+
+Eg.:
+```php
+use App\Twig\Attribute\AsTwigGlobal;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Serializer\SerializerInterface;
+
+class RankyAssetLoader
+{
+    private array $assets = [];
+
+    public function __construct(
+        private readonly Filesystem $filesystem,
+        private readonly SerializerInterface $serializer,
+
+        #[Autowire('%kernel.project_dir%/public/bundles/rankymedia/entrypoints.json')]
+        private readonly string $entrypointPathname,
+    )
+    {
+
+    }
+
+    public function get(): array
+    {
+        if($this->assets !== []) {
+            return $this->assets;
+        }
+
+        if(!$this->filesystem->exists($this->entrypointPathname)) {
+            throw new \RuntimeException(sprintf(
+                'Entrypoint file not found at "%s". Did you forget to run "php bin/console assets:install"?',
+                $this->entrypointPathname,
+            ));
+        }
+
+        $content = $this->filesystem->readFile($this->entrypointPathname);
+
+        $entrypoints = $this->serializer->decode($content, 'json');
+
+        return $this->assets = $entrypoints['entrypoints']['ranky_media'] ?? throw new \RuntimeException(
+            'Entrypoint file looks corrupted. Re-run "php bin/console assets:install" or check it\'s contents'
+        );
+    }
+}
+```
+
+```twig
+{% block stylesheets %}
+    {% for css in rankyAssetLoader.get()['css'] %}
+        <link rel="stylesheet" href="{{ css }}"/>
+    {% endfor %}
+
+    ... other entry tags
+{% endblock %}
+
+{% block javascripts %}
+    {% for js in rankyAssetLoader.get()['js']  %}
+        <script src="{{ js }}" defer="defer"></script>
+    {% endfor %}
+
+    ..s other entry tags
+{% endblock %}
+```
+
+#### Step 7 (if using Stimulus): Copy this bundle `ranky_controller.js` from recipes to your controllers
+
+
+#### Step 8 (if NOT using Stimulus): Initialize JS components manually
+
+Whole exposed interface:
+```ts
+interface Window {
+  RankyMediaBundle: {
+    // call when not using Turbo or other similar navigator/router
+    bindComponents: () => void;
+    
+    // no need to call manually
+    unbindComponents: () => void;
+    
+    // creates full page media manager instance
+    // don't forget to call unmount() when you are done with it
+    initMediaManager: (container: HTMLElement) => { unmount: (() => {}) };
+
+    // creates media manager modal picker,
+    // don't think you need to call this manually
+    renderMediaManagerModal: (event: Event) => void;
+
+    // call observe() when not using Turbo or other similar navigator/router,
+    mediaFormPreviewObserver: {
+      observe: () => void,
+      disconnect: () => void,
+    };
+    
+    // call to initialize RankyMediaFileManagerType form type,
+    // don't forget to call unmount() on the returned object to dispose
+    renderMediaFormPreview: (formSelect: HTMLDivElement) => { unmount: (() => {}) };
+  }
+}
+```
+
 ## Configuration
 
 ### Full configuration with default values

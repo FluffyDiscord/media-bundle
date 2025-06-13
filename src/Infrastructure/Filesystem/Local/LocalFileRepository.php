@@ -12,7 +12,8 @@ use Ranky\MediaBundle\Domain\Contract\FileRepositoryInterface;
 use Ranky\MediaBundle\Domain\Exception\RenameFileException;
 use Ranky\MediaBundle\Domain\ValueObject\Dimension;
 use Ranky\MediaBundle\Domain\ValueObject\File;
-use Ranky\SharedBundle\Common\FileHelper;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Filesystem\Filesystem;
 
 class LocalFileRepository implements FileRepositoryInterface
 {
@@ -20,7 +21,8 @@ class LocalFileRepository implements FileRepositoryInterface
     public function __construct(
         private readonly SafeFileName $safeFileName,
         private readonly FilePathResolverInterface $filePathResolver,
-        private readonly LoggerInterface $logger
+        private readonly LoggerInterface $logger,
+        private readonly Filesystem $filesystem,
     ) {
     }
 
@@ -47,11 +49,14 @@ class LocalFileRepository implements FileRepositoryInterface
     public function delete(string $fileName): void
     {
         $path = $this->filePathResolver->resolve($fileName);
-        if (!\file_exists($path)) {
+        if (!$this->filesystem->exists($path)) {
             $this->logger->warning('File did not find when trying to delete the file', ['file' => $path]);
             return;
         }
-        if(!\unlink($path)) {
+
+        try {
+            $this->filesystem->remove($path);
+        } catch (IOException) {
             $this->logger->error('File did not delete', ['file' => $path]);
         }
     }
@@ -59,7 +64,7 @@ class LocalFileRepository implements FileRepositoryInterface
 
     public function rename(string $oldPathFileName, string $newPathFileName): void
     {
-        if (!\file_exists($oldPathFileName)) {
+        if (!$this->filesystem->exists($oldPathFileName)) {
             throw new RenameFileException(
                 \sprintf(
                     'File did not find when trying to rename the file %s',
@@ -67,11 +72,15 @@ class LocalFileRepository implements FileRepositoryInterface
                 )
             );
         }
+
         $this->makeDirectory($newPathFileName);
 
-        if (!\rename($oldPathFileName, $newPathFileName)) {
+        try {
+            $this->filesystem->rename($oldPathFileName, $newPathFileName, true);
+        } catch (IOException $IOException) {
             throw new RenameFileException(
-                sprintf('Could not move (rename) the file "%s" to "%s".', $oldPathFileName, $newPathFileName)
+                sprintf('Could not move (rename) the file "%s" to "%s".', $oldPathFileName, $newPathFileName),
+                previous: $IOException,
             );
         }
     }
@@ -82,7 +91,7 @@ class LocalFileRepository implements FileRepositoryInterface
      */
     public function filesizeFromPath(string $path): int
     {
-        if (\file_exists($path) && $size = \filesize($path)) {
+        if ($this->filesystem->exists($path) && $size = \filesize($path)) {
             return $size;
         }
         $this->logger->warning('The file size could not be obtained. "0" returned', ['file' => $path]);
@@ -102,7 +111,7 @@ class LocalFileRepository implements FileRepositoryInterface
 
     public function makeDirectory(string $path): void
     {
-        FileHelper::makeDirectory(\dirname($path));
+        $this->filesystem->mkdir($path);
     }
 
 }

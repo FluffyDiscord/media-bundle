@@ -42,11 +42,6 @@ Encore.setOutputPath(publicPath)
     .copyFiles([
         {
             from: './public',
-        },
-        {
-            from: './node_modules/@uppy/locales/dist',
-            pattern: /\.(js)$/,
-            to: 'uppy/locales/[name].[ext]',
         }
     ])
     .enableTypeScriptLoader(function callback(tsConfig) {
@@ -78,6 +73,28 @@ Encore.setOutputPath(publicPath)
     // .enableSingleRuntimeChunk()
     .disableSingleRuntimeChunk()
     .enableSourceMaps(!Encore.isProduction());
+
+// enable all Uppy languages, still lazily loaded
+const uppyLocalesDir = './node_modules/@uppy/locales/lib';
+const outputLocalesDir = './_uppy-locales-pre-compiled';
+
+if (fs.existsSync(outputLocalesDir)) {
+  fs.rmSync(outputLocalesDir, {recursive: true, force: true});
+}
+
+fs.mkdirSync(outputLocalesDir, { recursive: true });
+
+const files = fs.readdirSync(uppyLocalesDir).filter((f) => f.endsWith('.js'));
+
+files.forEach((file) => {
+  const content = fs.readFileSync(path.join(uppyLocalesDir, file), 'utf8');
+
+  // strip `export default ...` to retain everything else
+  const transformed = content.replace(/export\s+default\s+[a-zA-Z0-9_]+;\s*$/, '');
+
+  fs.writeFileSync(path.join(outputLocalesDir, file), transformed);
+  Encore.addEntry(`uppy/locales/${path.basename(file, '.js')}.min`, `${outputLocalesDir}/${file}`);
+});
 
 const media = Encore.getWebpackConfig();
 media.name = 'media';

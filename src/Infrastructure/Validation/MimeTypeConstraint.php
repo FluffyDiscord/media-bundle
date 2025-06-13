@@ -21,7 +21,7 @@ class MimeTypeConstraint extends Constraint
         private readonly array $allowedMimeTypes = [],
         private readonly ?string $extension = null,
         $options = null,
-        array $groups = null,
+        ?array $groups = null,
         $payload = null
     ) {
         parent::__construct($options, $groups, $payload);

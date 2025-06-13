@@ -73,7 +73,7 @@ class LocalFileRepository implements FileRepositoryInterface
             );
         }
 
-        $this->makeDirectory($newPathFileName);
+        $this->makeDirectory(\pathinfo($newPathFileName, PATHINFO_DIRNAME));
 
         try {
             $this->filesystem->rename($oldPathFileName, $newPathFileName, true);

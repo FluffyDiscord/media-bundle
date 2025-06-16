@@ -10,7 +10,7 @@ class ListAvailableDatesFilterResponse implements ResponseFormFilterDtoInterface
 {
     use MappingTrait;
 
-    private function __construct(private readonly int $year, private readonly int $month, private readonly int $count)
+    public function __construct(protected readonly int $year, protected readonly int $month, protected readonly int $count)
     {
     }
 

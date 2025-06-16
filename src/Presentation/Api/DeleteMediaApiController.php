@@ -29,7 +29,7 @@ class DeleteMediaApiController extends BaseMediaApiController
     /**
      * @throws \Throwable
      */
-    public function __invoke(string $id = null): JsonResponse
+    public function __invoke(?string $id = null): JsonResponse
     {
         if (null === $id) {
             throw new CouldNotFindRequestValueException('Id');

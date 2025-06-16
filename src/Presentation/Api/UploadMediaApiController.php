@@ -39,7 +39,7 @@ class UploadMediaApiController extends BaseMediaApiController
         #[CurrentUser]
         ?UserInterface $user,
         #[File]
-        UploadedFileRequest $uploadedFileRequest = null
+        ?UploadedFileRequest $uploadedFileRequest = null
     ): JsonResponse {
         if (null === $uploadedFileRequest) {
             throw ApiProblemException::create($this->trans('errors.not_files'));

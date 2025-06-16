@@ -4,11 +4,15 @@ declare(strict_types=1);
 namespace Ranky\MediaBundle\Application\ListFilter\ListAvailableDatesFilter;
 
 
+use Ranky\MediaBundle\Application\ListFilter\ListAvailableDatesFilter\Factory\ListAvailableDatesFilterResponseFactoryInterface;
 use Ranky\MediaBundle\Domain\Contract\AvailableDatesMediaRepositoryInterface;
 
 class ListAvailableDatesFilter
 {
-    public function __construct(private readonly AvailableDatesMediaRepositoryInterface $availableDatesMediaRepository)
+    public function __construct(
+        private readonly AvailableDatesMediaRepositoryInterface $availableDatesMediaRepository,
+        private readonly ListAvailableDatesFilterResponseFactoryInterface $responseFactory,
+    )
     {
     }
 
@@ -18,7 +22,7 @@ class ListAvailableDatesFilter
     public function __invoke(): array
     {
         return \array_map(
-            static fn($mediaData) => ListAvailableDatesFilterResponse::fromArray((array)$mediaData),
+            fn($mediaData) => $this->responseFactory->create($mediaData),
             $this->availableDatesMediaRepository->getAll(),
             []
         );

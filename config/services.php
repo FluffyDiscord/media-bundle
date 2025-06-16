@@ -35,7 +35,6 @@ return static function (ContainerConfigurator $configurator) {
         ->load('Ranky\\MediaBundle\\', '../src/*')
         ->exclude([
             '../src/{DependencyInjection,DQL,Contract,Helper,Common,Entity,Trait,Traits,Migrations,Tests,RankyMediaBundle.php}',
-            '../src/**/*Interface.php',
             '../src/Common', // Helpers
             '../src/Infrastructure/DependencyInjection',
             '../src/Domain', // Entity

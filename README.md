@@ -9,6 +9,7 @@
 - Uppy now includes every language it supports, still lazily loaded
 - fixed some deprecations that I found
 - fixed few missing/weird translations
+- moved some static calls to factories
 
 --------------------
 

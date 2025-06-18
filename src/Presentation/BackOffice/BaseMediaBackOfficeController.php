@@ -46,7 +46,7 @@ abstract class BaseMediaBackOfficeController implements ServiceSubscriberInterfa
         string $id,
         array $parameters = [],
         string $domain = MediaBundleExtension::CONFIG_DOMAIN_NAME,
-        string $locale = null
+        ?string $locale = null
     ): string {
         return $this->container->get('translator')->trans($id, $parameters, $domain, $locale);
     }
@@ -60,7 +60,7 @@ abstract class BaseMediaBackOfficeController implements ServiceSubscriberInterfa
      * @throws \Psr\Container\NotFoundExceptionInterface
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function render(string $view, array $parameters = [], Response $response = null): Response
+    protected function render(string $view, array $parameters = [], ?Response $response = null): Response
     {
         if (null === $response) {
             $response = new Response();

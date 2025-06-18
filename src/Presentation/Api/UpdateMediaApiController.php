@@ -39,7 +39,7 @@ class UpdateMediaApiController extends BaseMediaApiController
         ?UserInterface $user,
         #[Body(constraint: UpdateMediaConstraint::class)]
         UpdateMediaRequest $updateMediaRequest,
-        string $id = null
+        ?string $id = null
     ): JsonResponse {
         if (null === $id) {
             throw ApiProblemException::create(

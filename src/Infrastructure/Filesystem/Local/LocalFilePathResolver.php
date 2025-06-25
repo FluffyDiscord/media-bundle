@@ -22,7 +22,7 @@ final class LocalFilePathResolver implements FilePathResolverInterface
         return \sprintf('%s/%s', $this->uploadDirectory, \trim($path, '/'));
     }
 
-    public function resolveFromBreakpoint(string $breakpoint, string $path = null): string
+    public function resolveFromBreakpoint(string $breakpoint, ?string $path = null): string
     {
 
         if (!Breakpoint::tryFrom($breakpoint)){

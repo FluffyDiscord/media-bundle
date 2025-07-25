@@ -118,7 +118,7 @@ const PageListLayout: React.FC<PageLayoutProps> = ({ pages, openModalFile }): Re
                       <input
                         type="checkbox"
                         name="media[]"
-                        data-model="on(none)|*"
+                        data-model="on(change)|"
                         id={`ck-media-${media.id}`}
                         onChange={(event) => handleSingleCheckbox(event, media.id)}
                         checked={selectedList.includes(media.id)}

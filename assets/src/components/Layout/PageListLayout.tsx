@@ -120,6 +120,7 @@ const PageListLayout: React.FC<PageLayoutProps> = ({ pages, openModalFile }): Re
                         id={`ck-media-${media.id}`}
                         onChange={() => handleSingleCheckbox(media.id)}
                         checked={selectedList.includes(media.id)}
+                        onInput={(event) => event.stopPropagation()}
                       />
                     </td>
                     <td>

@@ -69,6 +69,7 @@ const PageSelectableLayout: React.FC<PageLayoutProps> = ({ pages, openModalFile 
                   id={`ck-media-${media.id}`}
                   checked={selectedMedia.includes(media.id)}
                   onChange={(event) => onSelectMedia(event, media.id)}
+                  onInput={(event) => event.stopPropagation()}
                 />
                 {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
                 <label htmlFor={`ck-media-${media.id}`}>

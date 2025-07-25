@@ -23,6 +23,7 @@ const PageSelectableLayout: React.FC<PageLayoutProps> = ({ pages, openModalFile 
   }
 
   function onSelectMedia(event: React.MouseEvent<HTMLInputElement> | React.ChangeEvent<HTMLInputElement>, id: string) {
+    event.stopPropagation();
     if (settings.isMultipleSelection === false) {
       setSelectedMedia([id]);
       return;

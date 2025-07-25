@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import MimeList from '@rankyMedia/components/Layout/MimeList/MimeList';
 import { confirmDeleteAlert, errorAlert, successAlert } from '@rankyMedia/helpers/swal';
 import useTranslator from '@rankyMedia/api/hook/useTranslator';
@@ -30,7 +30,8 @@ const PageListLayout: React.FC<PageLayoutProps> = ({ pages, openModalFile }): Re
     }
   };
 
-  const handleSingleCheckbox = (id: string) => {
+  const handleSingleCheckbox = (event: ChangeEvent, id: string) => {
+    event.stopPropagation();
     if (selectedList.includes(id)) {
       setSelectedList(selectedList.filter((mediaId) => mediaId !== id));
       setSelectAll(false);
@@ -118,7 +119,7 @@ const PageListLayout: React.FC<PageLayoutProps> = ({ pages, openModalFile }): Re
                         type="checkbox"
                         name="media[]"
                         id={`ck-media-${media.id}`}
-                        onChange={() => handleSingleCheckbox(media.id)}
+                        onChange={(event) => handleSingleCheckbox(event, media.id)}
                         checked={selectedList.includes(media.id)}
                         onInput={(event) => event.stopPropagation()}
                       />

@@ -23,7 +23,6 @@ const PageSelectableLayout: React.FC<PageLayoutProps> = ({ pages, openModalFile 
   }
 
   function onSelectMedia(event: React.MouseEvent<HTMLInputElement> | React.ChangeEvent<HTMLInputElement>, id: string) {
-    event.stopPropagation();
     if (settings.isMultipleSelection === false) {
       setSelectedMedia([id]);
       return;
@@ -66,12 +65,9 @@ const PageSelectableLayout: React.FC<PageLayoutProps> = ({ pages, openModalFile 
                 <input
                   tabIndex={-1}
                   type="checkbox"
-                  name="media[]"
-                  data-model="min_length(5000)|media"
                   id={`ck-media-${media.id}`}
                   checked={selectedMedia.includes(media.id)}
                   onChange={(event) => onSelectMedia(event, media.id)}
-                  onInput={(event) => event.stopPropagation()}
                 />
                 {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
                 <label htmlFor={`ck-media-${media.id}`}>

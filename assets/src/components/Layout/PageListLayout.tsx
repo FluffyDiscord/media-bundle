@@ -30,8 +30,7 @@ const PageListLayout: React.FC<PageLayoutProps> = ({ pages, openModalFile }): Re
     }
   };
 
-  const handleSingleCheckbox = (event: ChangeEvent, id: string) => {
-    event.stopPropagation();
+  const handleSingleCheckbox = (id: string) => {
     if (selectedList.includes(id)) {
       setSelectedList(selectedList.filter((mediaId) => mediaId !== id));
       setSelectAll(false);
@@ -117,12 +116,9 @@ const PageListLayout: React.FC<PageLayoutProps> = ({ pages, openModalFile }): Re
                     <td>
                       <input
                         type="checkbox"
-                        name="media[]"
-                        data-model="min_length(5000)|media"
                         id={`ck-media-${media.id}`}
-                        onChange={(event) => handleSingleCheckbox(event, media.id)}
+                        onChange={() => handleSingleCheckbox(media.id)}
                         checked={selectedList.includes(media.id)}
-                        onInput={(event) => event.stopPropagation()}
                       />
                     </td>
                     <td>

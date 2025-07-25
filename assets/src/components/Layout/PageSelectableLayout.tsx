@@ -67,6 +67,7 @@ const PageSelectableLayout: React.FC<PageLayoutProps> = ({ pages, openModalFile 
                   tabIndex={-1}
                   type="checkbox"
                   name="media[]"
+                  data-model="on(none)|*"
                   id={`ck-media-${media.id}`}
                   checked={selectedMedia.includes(media.id)}
                   onChange={(event) => onSelectMedia(event, media.id)}
